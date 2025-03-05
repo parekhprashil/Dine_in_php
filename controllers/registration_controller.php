@@ -41,6 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
 
+            // middle name
+            if (!preg_match("/^[a-zA-Z]+$/", $last_name)) {
+                $response['message'] = "middle name must contain only letters and no space.";
+                $response['status'] = 201;
+                echo json_encode($response);
+                exit();
+            }
+
             // last name
             if (!preg_match("/^[a-zA-Z]+$/", $last_name)) {
                 $response['message'] = "Last name must contain only letters and no space.";
@@ -87,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($response);
                 exit();
             }
-            
 
             // hash password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
