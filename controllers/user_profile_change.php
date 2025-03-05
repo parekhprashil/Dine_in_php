@@ -31,6 +31,23 @@ $response = [];
                 $gender = $_POST['gender'];
                 $phone_number = $_POST['phone_number'];
 
+                $show_user_data = "SELECT user_first_name, user_middle_name, user_last_name, user_phone_number, user_email, user_gender FROM `usermaster` WHERE user_id = ?";
+
+                $show_user_data_stmt = mysqli_prepare($conn, $show_user_data);
+
+                mysqli_stmt_bind_param($show_user_data_stmt, "i", $user_id);
+
+                mysqli_stmt_execute($show_user_data_stmt);
+
+                $show_user_data_result = mysqli_stmt_get_result($show_user_data_stmt);
+
+                if ($show_user_data_result)
+                {
+                    $user_details = mysqli_fetch_assoc($show_user_data_result);
+                    $response['user'] = $user_details;
+                    $response['success'] = true;
+                    
+                }
 
                    // first name
                 if (!preg_match("/^[a-zA-Z]+$/", $first_name)) {
@@ -179,8 +196,6 @@ $response = [];
                                     $response['message'] = "Error while updating user profile";
                                     $response['status'] = 201;
                                 }
-
-                          
                         }
                         else
                         {
@@ -210,18 +225,8 @@ $response = [];
 
                     mysqli_stmt_bind_param($update_profile_query_stmt, "sssissi", $first_name, $middle_name, $last_name, $phone_number, $email, $gender, $user_id);
                     
-                    echo "before";
 
                     $update_profile_query_result = mysqli_stmt_execute($update_profile_query_stmt);
-
-                    if (!$update_profile_query_result) {
-                        // This will print any error if the query fails to execute
-                        echo "Error executing query: " . mysqli_stmt_error($update_profile_query_stmt);
-                        exit();  // Exit to prevent further execution
-                    }
-
-                    echo "after";
-
 
                     if ($update_profile_query_result)
                     {
