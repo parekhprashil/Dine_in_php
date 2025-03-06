@@ -3,7 +3,7 @@
 $localHost = 'localhost';
 $userName = 'sagar';
 $password = '123456';
-$dbName = 'dine_in_system';
+$dbName = 'hotel_dine_in_system';
 // $port = '';
 
     $conn = mysqli_connect($localHost, $userName, $password, $dbName);
