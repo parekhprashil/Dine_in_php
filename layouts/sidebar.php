@@ -69,7 +69,7 @@
               <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
             </a>
             <ul class="pc-submenu">
-              <li class="pc-item"><a class="pc-link" href="#!">Add City</a></li>
+              <li class="pc-item"><a class="pc-link" href="">Add City</a></li>
               <li class="pc-item"><a class="pc-link" href="#!">Manage City</a></li>
             </ul>
           </li>
@@ -92,8 +92,8 @@
               <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
             </a>
             <ul class="pc-submenu">
-              <li class="pc-item"><a class="pc-link" href="#!">Add Country</a></li>
-              <li class="pc-item"><a class="pc-link" href="#!">Manage Country</a></li>
+              <li class="pc-item"><a class="pc-link" href="./add_country.php">Add Country</a></li>
+              <li class="pc-item"><a class="pc-link" href="./manage_country.php">Manage Country</a></li>
             </ul>
           </li>
           <li class="pc-item pc-hasmenu">

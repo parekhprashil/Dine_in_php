@@ -12,7 +12,12 @@ $result = $conn->query($query);
 $data = array();
 
 while ($row = $result->fetch_assoc()) {
-    $user_image = !empty($row['user_image']) ? '<img src="./uploads/' . htmlspecialchars($row['user_image']) . '" width="50">' : 'No Image';
+  $default_image_url = "./assets/images/default.jpg"; 
+
+  $user_image = !empty($row['user_image']) 
+      ? '<img src="http://192.168.4.212/Hotel_DineIn_API/Dine_in_php/API/Dine_in_php-sagar/uploads/profile/' . htmlspecialchars($row['user_image']) . '" class="user-image" width="50">' 
+      : '<img src="'.$default_image_url.'" class="user-image" width="50">';
+  
 
     $data[] = array(
         "user_id" => $row['user_id'],
@@ -31,7 +36,7 @@ while ($row = $result->fetch_assoc()) {
         "user_block_timing" => !empty($row['user_block_timing']) ? $row['user_block_timing'] : 'N/A',
         "user_addeddate" => $row['user_addeddate'],
         "user_updateddate" => !empty($row['user_updateddate']) ? $row['user_updateddate'] : 'N/A',
-       "actions" => '<button class="btn btn-danger btn-sm delete-user" data-id="' . $row['user_id'] . '">
+        "actions" => '<button class="btn btn-danger btn-sm delete-user" data-id="' . $row['user_id'] . '">
                 <i class="fas fa-trash"></i> 
               </button>',
 
