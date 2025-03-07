@@ -1,5 +1,28 @@
 <?php
-$message = '<!DOCTYPE html>
+
+include '../lib/dnConnect.php';
+$token = bin2hex(random_bytes(32));
+$expires_at = time() + 3600; // 1 hour from now
+
+$stmt = $conn->prepare("SELECT user_id FROM usermaster WHERE user_email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if($result->num_rows >0)
+{
+    $user = $result->fetch_assoc();
+    $user_id = $user['user_id']; // Get user ID
+
+    $token = bin2hex(random_bytes(32)); 
+    $expires_at = time() + 3600;
+
+    $stmt = $conn->prepare("INSERT INTO password_resets (user_id, token) VALUES (?, ?)");
+    $stmt->bind_param("is", $user_id, $token);
+    $stmt->execute();
+
+    $reset_link = "http://192.168.4.212/hotel_DineIn_API/Dine_in_php/API/Dine_in_php-sagar/controllers/reset-pass.php?token=".$token;
+    $message = '<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -75,10 +98,14 @@ $message = '<!DOCTYPE html>
             <h2>Change Your Password</h2>
         </div>
         <div class="content">
-            <p><strong>Subject:</strong> Password Change Request</p>
+            <p><strong>Subject:</strong>Berry password reset</p>
             <p>Dear User,</p>
-            <p>You have requested to change your password. Please use the temporary password below and update it immediately.</p>
-            <div class="password-box">' . htmlspecialchars($password) . '</div>
+            <p>We heard that you lost your GitHub password. Sorry about that! </p>
+            <p>But don’t worry! You can use the following button to reset your password:</p>
+            <a href="'. $reset_link .'" class="button">Reset Your Password</a>
+            <p>If you did not request a password reset, please ignore this email or reply to let us know. This password reset is only valid for the next 1 hour.</p>
+    
+            <p>You have requested to change your password. Please use the temporary password below and update it immediately.<a href='. $reset_link.'>Reset Your Password</p>
             <p>If you did not request this, please ignore this email.</p>
         </div>
         <div class="footer">
@@ -91,4 +118,7 @@ $message = '<!DOCTYPE html>
     </div>
 </body>
 </html>';
+
+}
+
 ?>
