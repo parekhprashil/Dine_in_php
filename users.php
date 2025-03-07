@@ -156,9 +156,9 @@
                                     <img id="modalImage" src="" class="img-fluid" alt="User Image">
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
-                    
+
                     <!-- SweetAlert2 CSS -->
                     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -179,18 +179,17 @@
                                 "info": true,
                             });
 
-                            $(".user-image").on("click", function() {
+                            $(document).on("click", ".user-image", function() {
                                 let imageUrl = $(this).attr("src");
                                 $("#modalImage").attr("src", imageUrl);
                                 $("#imageModal").modal("show");
                             });
 
+
                         });
-                        
                     </script>
-                     
-                      <?php include_once './layouts/footer.php' ?>                
+
+                    <?php include_once './layouts/footer.php' ?>
 </body>
 
 </html>
-
